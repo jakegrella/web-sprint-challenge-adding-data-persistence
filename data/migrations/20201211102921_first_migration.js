@@ -8,7 +8,7 @@ exports.up = function (knex) {
 			//  description: string, optional
 			table.string('project_description');
 			//  completed: boolean, required, default = false
-			table.boolean('project_completed').defaultTo(0);
+			table.boolean('project_completed').notNullable().defaultTo(0);
 		})
 		.createTable('resources', (table) => {
 			//  PK
