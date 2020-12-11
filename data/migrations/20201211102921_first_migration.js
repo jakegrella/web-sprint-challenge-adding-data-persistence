@@ -20,8 +20,51 @@ exports.up = function (knex) {
 		})
 		.createTable('tasks', (table) => {
 			//  PK
-			table.increments('');
+			table.increments('task_id');
+			//  description: string, required
+			table.string('task_description').notNullable();
+			//  notes: string, optional
+			table.string('task_notes');
+			//  completed: boolean, required, default = false
+			table.boolean('task_completed').defaultTo(0);
+			//  project id: FK integer, required
+			table
+				.integer('project_id')
+				.unsigned()
+				.notNullable()
+				.references('project_id')
+				.inTable('projects')
+				.onDelete('RESTRICT')
+				.onUpdate('RESTRICT');
+		})
+		.createTable('project_resources', (table) => {
+			//  PK
+			table.increments();
+			//  project id: FK integer, required
+			table
+				.integer('project_id')
+				.unsigned()
+				.notNullable()
+				.references('project_id')
+				.inTable('projects')
+				.onDelete('RESTRICT')
+				.onUpdate('RESTRICT');
+			//  resource id: FK integer, required
+			table
+				.integer('resource_id')
+				.unsigned()
+				.notNullable()
+				.references('resource_id')
+				.inTable('resources')
+				.onDelete('RESTRICT')
+				.onUpdate('RESTRICT');
 		});
 };
 
-exports.down = function (knex) {};
+exports.down = function (knex) {
+	return knex.schema
+		.dropTableIfExists('project_resources')
+		.dropTableIfExists('tasks')
+		.dropTableIfExists('resources')
+		.dropTableIfExists('projects');
+};

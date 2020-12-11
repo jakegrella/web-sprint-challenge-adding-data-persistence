@@ -5,10 +5,7 @@ const ProjectRouter = require('./project/router');
 
 const server = express();
 
-// middlewares
-const logger = require('./middlewares/logger');
-
 server.use(express.json());
-server.use('/api/project', logger, ProjectRouter);
+server.use('/api/projects', ProjectRouter);
 
 module.exports = server;

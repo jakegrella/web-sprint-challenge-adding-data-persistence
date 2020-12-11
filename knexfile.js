@@ -24,7 +24,7 @@ module.exports = {
 		client: 'sqlite3',
 		useNullAsDefault: true,
 		connection: {
-			filename: './data/projects.db3',
+			filename: './data/seeds/01-projects.js',
 		},
 		migrations: {
 			directory: './data/migrations',
